@@ -1,12 +1,10 @@
 import { taskModel, userSignUpModel } from "../db/index.js";
 
-// Use Postman to Test
-
 export const getUser = async (req, res, next) => {
   try {
     const allUsers = await userSignUpModel.find({});
-    console.log(allUsers, "all signedUp users");
-    res.status(201).json(allUsers);
+
+    res.status(200).send(allUsers);
   } catch (error) {
     next(error);
   }

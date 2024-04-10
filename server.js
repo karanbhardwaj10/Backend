@@ -3,7 +3,9 @@ import cors from "cors";
 import axios from "axios";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
-import { getUser } from "./services/index.js";
+import { getUser } from "./controller/index.js";
+import { errorHandler } from "./middleware/errorHandler.js";
+import router from "./router/index.js";
 
 const port = 5000;
 
@@ -19,12 +21,16 @@ const server = () => {
     );
   }
 
-  app.get("/get", getUser);
-
-  main().catch(err => console.log(err));
+  router(app);
+  app.use(errorHandler);
 
   app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+    const message = `|| Server running on port ${port} 🚀 ||`;
+    const len = message.length;
+
+    console.log("~".repeat(len));
+    console.log(message);
+    console.log("~".repeat(len));
   });
 };
 
