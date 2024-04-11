@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import axios from "axios";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import { getUser } from "./controller/index.js";
