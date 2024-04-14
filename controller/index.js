@@ -43,11 +43,12 @@ export const getTasks = async (req, res, next) => {
 };
 
 export const createTasks = async (req, res, next) => {
-  console.log("42", req.body);
+  console.log("42", req.body.username);
   const { taskName, taskDescription, imageLink, id } = req.body;
   const user = await userSignUpModel.findOne({
-    userName: "karanBhardwajKBJ2",
+    userName:  req.body.username,
   });
+  console.log(req.body);
   let length = user.userTasks.length;
   if (user) {
     try {
