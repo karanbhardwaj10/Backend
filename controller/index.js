@@ -2,27 +2,27 @@ import { taskModel, userSignUpModel } from "../db/index.js";
 
 export const getUser = async (req, res, next) => {
   // try {
-    const allUsers = await userSignUpModel.find({});
-    res.status(200).send(allUsers);
+  const allUsers = await userSignUpModel.find({});
+  res.status(200).send(allUsers);
   // } catch (error) {
   //   // next(error);
   // }
 };
 
 export const userSignup = async (req, res, next) => {
-  console.log("17", req.body);
-  const { userName, password } = req.body;
-  const user = await userSignUpModel.findOne({ userName });
   try {
+    const { userName, password } = req.body;
+
+    const user = await userSignUpModel.findOne({ userName });
     if (user) {
       res.status(403).json({
         message:
-          "User already exists, try using a different username for yourself",
+          "User already exists, try using a different username for yourself"
       });
     }
     const newUser = new userSignUpModel({
       userName,
-      password,
+      password
     });
     await newUser.save();
     res.status(201).json(newUser);
@@ -43,10 +43,9 @@ export const getTasks = async (req, res, next) => {
 };
 
 export const createTasks = async (req, res, next) => {
-  console.log("42", req.body.username);
   const { taskName, taskDescription, imageLink, id } = req.body;
   const user = await userSignUpModel.findOne({
-    userName:  req.body.username,
+    userName: req.body.username
   });
   console.log(req.body);
   let length = user.userTasks.length;
@@ -56,7 +55,7 @@ export const createTasks = async (req, res, next) => {
         taskName,
         taskDescription,
         imageLink,
-        id: length + 1,
+        id: length + 1
       });
       user.userTasks.push(newTask);
       await user.save();
@@ -74,7 +73,7 @@ export const updateTask = async (req, res, next) => {
   const taskId = req.params.taskId;
   console.log(taskId, "taskID");
   const todoTask = await taskModel.findOneAndUpdate({ _id: taskId }, req.body, {
-    new: true,
+    new: true
   });
   if (todoTask) {
     res.json({ message: "task updated successfully" });
@@ -84,9 +83,11 @@ export const updateTask = async (req, res, next) => {
 };
 
 export const deleteTask = async (req, res, next) => {
+  // const id = req.params.id;
+
   const user = await userSignUpModel
     .findOne({
-      userName: "karanBhardwajKBJ2",
+      userName: "karanBhardwajKBJ2"
     })
     .populate("userTasks");
 

@@ -21,16 +21,7 @@ const server = () => {
   }
 
   router(app);
-  function fn(params) {
-    console.log("mai to call ho hi jaunga");
-    function got(params) {
-      console.log("got1");
-    }
-    function got2(params) {
-      console.log("got2");
-    }
-  }
-  fn();
+
   app.use(errorHandler);
 
   app.listen(port, () => {
